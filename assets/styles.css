@@ -1,0 +1,583 @@
+/* ==========================================================
+   Light, Clean, Modern UI – Soft 3D Table + Controls
+   ========================================================== */
+
+:root {
+  --bg: #eef0f6;
+  --panel: #f7f8fc;
+  --card: #ffffff;
+  --text: #3d4350;
+  --muted: #6f7480;
+  --myColor: #5b6598;
+  --accent: #7d8cff;
+  --accent-2: #b1bbff;
+  --row-hover-1: #fafbff;
+  --row-hover-2: #eef0f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: rgba(125, 140, 255);
+  text-decoration: none;
+}
+
+a:hover {
+  color: darkblue;
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  font-size: 1em;
+  background: rgba(0, 0, 0, 0.01);
+  color: var(--text);
+  transform-origin: 0 0;
+}
+
+/* ==========================================================
+   Container
+   ========================================================== */
+.container {
+  width: 98%;
+  margin: 30px auto;
+  background-color: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* ==========================================================
+   Topbar
+   ========================================================== */
+.topbar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.topbar h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 22px;
+  color: (--myColor);
+  font-weight: 600;
+  background-color: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#zoomControls button {
+  /* Κύριες αλλαγές για κομψή εμφάνιση: */
+  font-size: 1em;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background 0.2s ease-in-out;
+  background-color: transparent;
+  color: rgba(125, 140, 255, 0.8);
+  border: 1px solid #7d8cff80;
+  cursor: pointer;
+  margin: 5px 2px;
+  padding: 6px;
+  border-radius: 50%;
+  /* ΝΕΑ ΙΔΙΟΤΗΤΑ: Σκιά στο κείμενο */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  /* Πολύ διακριτική αρχική σκιά για να φαίνεται η αλλαγή στο hover */
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+}
+
+#zoomControls button:hover {
+  color: #5b6598;
+
+  /* 1. Η κίνηση: Μετακινείται αισθητά 3px προς τα πάνω. 
+       Προσοχή: Χρησιμοποιούμε translateY(-3px) για να βγει ΠΡΟΣ ΤΑ ΕΞΩ. */
+  transform: translateY(-3px);
+  border: 1px solid rgba(125, 140, 255, 0.3);
+  /* 2. Η Σκιά: Μεγαλώνει αισθητά, δίνοντας βάθος και έμφαση ότι "υψώνεται".
+       Η τιμή 0 8px 15px 0 είναι ιδανική για έντονο Pop Out. */
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  background-color: #f7f7ff;
+}
+
+#zoomControls {
+  position: fixed;
+  top: 5px;
+  right: 20px;
+}
+
+/* ==========================================================
+   Controls (Search + Filters)
+   ========================================================== */
+.controls {
+  padding: 0 16px 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+#search {
+  display: none;
+}
+
+.row {
+  display: flex;
+  background-color: linear-gradient(90deg, var(--accent), var(--accent-2));
+  gap: 7px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.input,
+.select {
+  padding: 8px 10px;
+  margin: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(125, 140, 255);
+  background-color: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: var(--accent);
+  font-size: 12px;
+  width: 180px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.select option:hover {
+  background-color: red;
+}
+
+.select option {
+  border-radius: 6px;
+  background-color: #f7f8fc;
+
+}
+
+input[type="select"] {
+  background-color: red;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(125, 140, 255);
+  color: rgba(125, 140, 255);
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+
+/* ==========================================================
+   Table Wrapper + Alignment
+   ========================================================== */
+.tablewrap {
+  margin: 0 1%;
+  max-width: 98%;
+  overflow-x: auto;
+  padding: 0%;
+  width: 100%;
+}
+
+/* ==========================================================
+   Table Base Styles
+   ========================================================== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1em;
+  table-layout: auto;
+  border-bottom: 1px solid rgba(91, 101, 152, 0.5);
+}
+
+.table tbody tr:first-child td {
+  border-top: none !important;
+}
+
+.table th thead {
+  padding: 10px 5px 30px 5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.table th {
+  border-top: 1px solid rgba(91, 101, 152, 0.5);
+  border-bottom: 1px solid rgba(91, 101, 152, 0.5);
+
+  /* Εφαρμογή του χρώματος κειμένου (αν χρειάζεται να υπερισχύσει το inline style) */
+  color: #5b6598;
+}
+
+.table td {
+  padding: 18px 3px;
+  text-align: center;
+  vertical-align: middle;
+  word-break: auto;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  border-top: 15px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 15px solid rgba(255, 255, 255, 0.3);
+
+  /* Αφαιρούμε τα πλάγια περιγράμματα */
+  border-left: none;
+  border-right: none;
+
+  /* Προσθέτουμε λίγο εσωτερικό padding για να ξεχωρίζει το περίγραμμα */
+  padding: 10px;
+
+}
+
+/* Στυλ για το κελί του Χάρτη (ίδιο με πριν) */
+.table .cell-map {
+  text-align: center;
+  width: 60px;
+}
+
+/* Στυλ για το εικονίδιο SVG μέσα στον σύνδεσμο */
+.table .map-icon {
+  width: 18px;
+  /* Ορίζει το μέγεθος του εικονιδίου */
+  height: 18px;
+  /* Χρησιμοποιεί το κύριο χρώμα (π.χ. μπλε) */
+  display: block;
+  /* Για να κεντραριστεί σωστά */
+  margin: 0 auto;
+  transition: color 0.1s, transform 0.1s;
+  /* Ομαλές μεταβάσεις */
+}
+
+/* Εφέ Hover */
+.table .map-link:hover .map-icon {
+  color: #7d8cff;
+  /* Αλλάζει το χρώμα σε κόκκινο στο hover (όπως η Google Pin) */
+  transform: scale(3.0);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  /* Ελαφριά μεγέθυνση */
+}
+
+/* ==========================================================
+   3D Hover Row Effect (Elegant + Strong Lift)
+   ========================================================== */
+
+.table tbody tr {
+  cursor: default;
+  /* ΟΡΙΖΟΥΜΕ ΤΗΝ ΤΑΧΥΤΗΤΑ ΕΠΙΣΤΡΟΦΗΣ ΕΔΩ */
+  transition: all 0.1s ease-in-out;
+  /* Για παράδειγμα, 0.15 δευτερόλεπτα */
+
+}
+
+/* ΒΑΣΙΚΟ PADDING (π.χ. 12px πάνω/κάτω) */
+.table tbody td,
+.table thead th {
+  /* Βάλε εδώ το βασικό padding σου */
+  padding: 12px 15px;
+  transition: padding 0.1s ease-in-out;
+  /* Προσθέτουμε transition και εδώ */
+}
+
+/* ΝΕΟΣ ΚΑΝΟΝΑΣ: Αυξάνουμε το padding στο hover */
+.table tbody tr:hover {
+  background: white;
+  transform: translateY(-8px);
+  border-radius: 12px;
+  border-color: transparent !important;
+  padding: 58px 15px;
+  box-shadow:
+    0 12px 22px rgba(0, 0, 0, 0.12),
+    0 0 18px rgba(125, 140, 255, 0.22),
+    0 0 28px rgba(155, 170, 255, 0.18);
+  position: relative;
+  z-index: 3;
+  color: #5b6598;
+}
+
+.map-pin-link {
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.map-pin-svg {
+  width: 19px;
+  height: 19px;
+  color: rgba(125, 140, 255, 0.8);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.map-pin-link:hover .map-pin-svg {
+  color: rgba(125, 140, 255, 1);
+  /* Κόκκινο */
+  transform: scale(1.75);
+  /* Zoom */
+  cursor: pointer;
+}
+
+/* ==========================================================
+   Highlight (search match)
+   ========================================================== */
+.highlight {
+  background: rgba(125, 140, 255, 0.18);
+  padding: 1px 3px;
+  border-radius: 4px;
+}
+
+/* ==========================================================
+   Pagination
+   ========================================================== */
+.pagination {
+  display: fixed;
+  gap: 15px;
+  text-align: center;
+  padding: 14px 0;
+  flex-wrap: wrap;
+  color: #5b6598;
+}
+
+/* .pagination button {
+  padding: 7px 11px;
+  border-radius: 8px;
+  border: 1px solid  rgba(125, 140, 255, 0.5);
+  background:  rgba(125, 140, 255, 0.1);
+  color: #5b6598 !important;
+  cursor: pointer;
+  margin: 10px 5px;
+  font-size: 12px;
+  /* ΝΕΟ: Εφαρμόζει ομαλή κίνηση σε 0.2 δευτερόλεπτα 
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);  
+} */
+
+.pagination button {
+  padding: 7px 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(125, 140, 255, 0.5);
+  color: #5b6598 !important;
+  cursor: pointer;
+  margin: 10px 5px;
+  font-size: 12px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background 0.2s ease-in-out;
+
+  /* ΝΕΑ/ΔΙΟΡΘΩΜΕΝΗ ΣΚΙΑ: Με inset για 3D γυαλάδα */
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 0 4px rgba(125, 140, 255, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    /* Φωτεινή, γυαλιστερή γραμμή στην κορυφή */
+    inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+  /* Σκούρα γραμμή στη βάση (ορισμός περιγράμματος) */
+
+  display: inline-block;
+  width: 33px;
+  text-align: center;
+
+  /* ΕΝΙΣΧΥΣΗ GRADIENT: Πιο έντονο λευκό */
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.4) 15%,
+      /* Πιο έντονο λευκό και μικρότερη περιοχή (πιο λαμπερό) */
+      rgba(125, 140, 255, 0.1));
+}
+
+.pagination button:hover {
+  transform: translateY(-4px);
+
+  /* ΝΕΑ/ΔΙΟΡΘΩΜΕΝΗ ΣΚΙΑ */
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.25),
+    0 0 10px rgba(125, 140, 255, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+
+  /* Πιο έντονο Gradient στο hover, διατηρώντας τη γυαλάδα */
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.5) 15%,
+      rgba(125, 140, 255, 0.3));
+}
+
+.pagination button.active {
+  color: #fff;
+  border-color: transparent;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+
+  /* Μείωση Γυαλάδας για εφέ "πατήματος" */
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.1),
+      rgba(125, 140, 255, 0.5));
+}
+
+.pagination button.active:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  /* ΝΕΟ: Gradient για Γυαλάδα στο hover του ενεργού κουμπιού */
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.25),
+      /* Ελαφρώς πιο έντονη γυαλάδα */
+      rgba(125, 140, 255, 0.6)
+      /* Ακόμα πιο σκούρο βασικό χρώμα */
+    );
+}
+
+
+/* ΝΕΟ: Εφέ ανασήκωσης (Hover State) */
+/* .pagination button:hover {
+  /* Μετακινεί το κουμπί 2px προς τα πάνω (-y άξονας) 
+  transform: translateY(-2px);
+  background: rgba(125, 140, 255, 0.3);
+  /* Προσθέτει μια απαλή σκιά για να φαίνεται "σηκωμένο" 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} */
+
+/* ΝΕΟ: Εφέ ανασήκωσης και για το ενεργό κουμπί (Active State) */
+/* .pagination button.active:hover {
+  /* Το ενεργό κουμπί ανασηκώνεται επίσης (προσαρμογή σκιών αν χρειαστεί) 
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pagination button.active {
+  background: rgba(125, 140, 255, 0.3);
+  color: #fff;
+  border-color: transparent;
+} */
+
+.status {
+  font-size: 12px;
+  margin: 5px auto 20px auto;
+}
+
+/* =====================================================
+        FOOTER
+==========================================================*/
+#mainFooter {
+  /* Φωτεινό, απαλό φόντο */
+  background-color: rgba(125, 140, 255, 0.1);
+  padding: 20px 20px 30px 20px;
+  margin-top: 40px;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  /* Flexbox για να ελέγξουμε τη διάταξη */
+  display: flex;
+  justify-content: space-between;
+  /* Σπρώχνει τα στοιχεία στα άκρα */
+  align-items: flex-end;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999;
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------- */
+/* ΑΡΙΣΤΕΡΑ: COPYRIGHT & ΤΕΧΝΙΚΕΣ ΠΛΗΡΟΦΟΡΙΕΣ (footer-row-2) */
+/* ----------------------------------------------------- */
+.footer-row-2 {
+  /* Αυτή η ενότητα μένει Αριστερά */
+  text-align: center;
+  font-size: 0.95em;
+  color: #5b6598;
+  /* Πιο διακριτικό χρώμα */
+  max-width: 700px;
+  /* Διασφάλιση ότι δεν θα συρρικνωθεί υπερβολικά */
+  flex-shrink: 0;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+/* ----------------------------------------------------- */
+/* ΚΕΝΤΡΟ: ΔΙΕΥΘΥΝΣΕΙΣ & EMAILS (footer-row-1) */
+/* ----------------------------------------------------- */
+.footer-row-1 {
+  /* Δημιουργούμε ένα block για τα στοιχεία επικοινωνίας στο ΚΕΝΤΡΟ */
+  text-align: center;
+  color: #5b6598;
+  line-height: 1.5;
+  flex-grow: 1;
+  /* Παίρνει όλο τον διαθέσιμο χώρο στο κέντρο */
+  padding: 0 20px;
+  /* Απομόνωση από τα άκρα */
+}
+
+/* Στυλ για Συνδέσμους/Emails */
+#mainFooter a {
+  color: #5b6598;
+  /* Το χρώμα έμφασης */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#mainFooter a:hover {
+  text-decoration: none;
+}
+
+#mainFooter a {
+  color: rgba(125, 140, 255);
+}
+
+/*==========================================================
+      HEADER
+===========================================================*/
+#mainHeader {
+  /* Flexbox για να ελέγξουμε τη διάταξη */
+  display: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+
+/* Στυλ για Συνδέσμους/Emails */
+#mainHeader a {
+  color: #5b6598;
+  /* Το χρώμα έμφασης */
+  text-decoration: none;
+  font-weight: 500;
+
+}
+
+#mainHeader a:hover {
+  text-decoration: none;
+}
+
+
+/* ==========================================================
+   Mobile Responsive
+   ========================================================== */
+@media (max-width: 800px) {
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border-bottom: none;
+  }
+
+  .table tbody td:before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--muted);
+  }
+}
+
